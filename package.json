@@ -1,13 +1,16 @@
 {
   "name": "easybook",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev:frontend": "pnpm --filter frontend dev",
-    "dev:backend": "pnpm --filter backend start",
-    "dev": "concurrently \"pnpm dev:frontend\" \"pnpm dev:backend\""
+    "dev:auth": "pnpm --filter @easybook/auth-service start:dev",
+    "dev:all": "pnpm recursive run start:dev",
+    "build": "pnpm recursive run build",
+    "install:all": "pnpm install"
   },
   "devDependencies": {
+    "typescript": "^5.8.2",
     "concurrently": "^7.0.0"
   }
 }
