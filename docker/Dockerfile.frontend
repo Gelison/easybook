@@ -1,0 +1,20 @@
+FROM node:18
+WORKDIR /app
+
+# Копируем pnpm-workspace.yaml и pnpm-lock.yaml из корня
+COPY pnpm-workspace.yaml pnpm-lock.yaml ./
+
+# Копируем package.json из папки frontend
+COPY apps/frontend/package.json ./apps/frontend/
+
+# Устанавливаем pnpm и зависимости для frontend
+RUN npm install -g pnpm && pnpm install --filter ./apps/frontend
+
+# Копируем остальные файлы frontend
+COPY apps/frontend ./apps/frontend
+
+# Устанавливаем рабочую директорию
+WORKDIR /app/apps/frontend
+
+# Запускаем приложение
+CMD ["pnpm", "dev"]

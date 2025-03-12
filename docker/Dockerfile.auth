@@ -1,0 +1,20 @@
+FROM node:18
+WORKDIR /app
+
+# Копируем pnpm-workspace.yaml и pnpm-lock.yaml из корня
+COPY pnpm-workspace.yaml pnpm-lock.yaml ./
+
+# Копируем package.json из папки auth-service
+COPY apps/backend/services/auth-service/package.json ./apps/backend/services/auth-service/
+
+# Устанавливаем pnpm и зависимости для auth-service
+RUN npm install -g pnpm && pnpm install --filter ./apps/backend/services/auth-service
+
+# Копируем остальные файлы auth-service
+COPY apps/backend/services/auth-service ./apps/backend/services/auth-service
+
+# Устанавливаем рабочую директорию
+WORKDIR /app/apps/backend/services/auth-service
+
+# Запускаем приложение
+CMD ["pnpm", "start:dev"]
