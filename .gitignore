@@ -1,0 +1,13 @@
+# Node
+node_modules/
+dist/
+build/
+
+# pnpm specific
+.pnpm-debug.log
+
+# Environment variables
+.env*
+
+# Docker
+docker-compose.override.yml
