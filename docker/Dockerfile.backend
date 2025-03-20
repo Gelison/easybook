@@ -1,0 +1,9 @@
+FROM node:18
+WORKDIR /app
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY apps/backend/services/auth-service ./apps/backend/services/auth-service/
+RUN npm install -g pnpm && pnpm install --frozen-lockfile
+# Устанавливаем @nestjs/cli в корень с флагом -w
+RUN pnpm add -D @nestjs/cli -w
+WORKDIR /app/apps/backend/services/auth-service
+CMD ["npx", "--yes", "nest", "start", "--watch"]
